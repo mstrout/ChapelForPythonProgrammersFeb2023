@@ -10,9 +10,9 @@ For these code examples to compile and run as described in the "usage" message a
 top of each source file, make sure you have installed, initialized, and started
 podman as described below in Prerequisites.
 
-* hello.chpl, serial version of hello world
-* hello6-taskpar-dist.chpl, distributed and thread parallel version
-
+* `hello.chpl`, serial version of hello world
+* `hello6-taskpar-dist.chpl`, distributed and thread parallel version
+* `kmer.chpl`, serial kmer counting program, `kmer_large_input_file.txt` is example input
 
 ## Chapel Tutorial for Python Programmers: Productivity and Performance in One Language
 
