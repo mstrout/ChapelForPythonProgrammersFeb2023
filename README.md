@@ -6,7 +6,13 @@ where the tutorial is being held.
 
 ## Code Examples
 
-*
+For these code examples to compile and run as described in the "usage" message at the
+top of each source file, make sure you have installed, initialized, and started
+podman as described below in Prerequisites.
+
+* hello.chpl, serial version of hello world
+* hello6-taskpar-dist.chpl, distributed and thread parallel version
+
 
 ## Chapel Tutorial for Python Programmers: Productivity and Performance in One Language
 
