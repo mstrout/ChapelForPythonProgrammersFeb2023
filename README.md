@@ -13,6 +13,7 @@ podman as described below in Prerequisites.
 * `hello.chpl`, serial version of hello world
 * `hello6-taskpar-dist.chpl`, distributed and thread parallel version
 * `kmer.chpl`, serial kmer counting program, `kmer_large_input_file.txt` is example input
+* `diffusion.chpl`, a parallel implementation of heat diffusion
 
 ## Chapel Tutorial for Python Programmers: Productivity and Performance in One Language
 

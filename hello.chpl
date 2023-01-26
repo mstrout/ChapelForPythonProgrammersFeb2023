@@ -7,7 +7,7 @@
    usage on laptop with podman (or docker):
      podman pull docker.io/chapel/chapel     // only have to do this once, but it takes a few minutes
 
-     podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel chpl -o hello hello.chpl
+     podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel chpl hello.chpl
      podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel ./hello
 
    For docker usage, see https://chapel-lang.org/install-docker.html
