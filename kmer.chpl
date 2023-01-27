@@ -28,41 +28,21 @@ config const infile = "kmer_large_input.txt";
 //      ./kmer --k=7
 config const k = 4;
 
-// main
-writeln("Number of unique k-mers in ", infile, " is ", numUniqueKmers());
+// read in the input sequence from the file infile
+var sequence : string;
+var f = open(infile, iomode.r);
+var fReader =  f.reader();
+fReader.read(sequence);
 
-// helper procedures
-proc numUniqueKmers() : int {
-  var sequence : string;
+// declare a dictionary/map to store the count per kmer
+var nkmerCounts : map(string, int);
 
-  var f = open(infile, iomode.r);
-  var fReader =  f.reader();
-
-  var nkmerCounts : map(string, int);
-
-  if(!fReader.read(sequence)) {
-      halt("File read error");
-  } else {
-      kmerCountSerial(sequence, 0, sequence.size-1, k, nkmerCounts);
-      writeln(nkmerCounts);
-  }
-  return nkmerCounts.size;
+// count up the number of times each kmer occurs
+for ind in 0..<(sequence.size-k) {
+  nkmerCounts[sequence[ind..<ind+k]] += 1;
 }
 
-/**
-    to find a map of Kmer counts serial
-
-    arguments
-    dnaSequence string                        -> string to be used for Kmer counting
-    l int                                     -> left bound
-    r int                                     -> right bound
-    k int                                     -> len of a k-mer
-    kmerCounts map((string, int, true)) (ref) -> a map of all Kmer and their counts
-**/
-proc kmerCountSerial(dnaSequence : string, l : int, r : int, k : int,
-                     ref kmerCounts : map(string, int, false)) {
-    for ind in l..<(r-k+2) {
-        kmerCounts[dnaSequence[ind..#k]] += 1;
-    }
-}
-
+writeln("Number of unique k-mers in ", infile, " is ", nkmerCounts.size);
+writeln();
+writeln("nkmerCounts = ");
+writeln(nkmerCounts);
