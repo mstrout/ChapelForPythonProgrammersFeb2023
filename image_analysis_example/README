@@ -1,0 +1,7 @@
+To compile, do
+
+chpl main.chpl --cpp-lines -Llibpng-1.6.38/.libs -lpng16 --fast
+
+To run, do
+
+./main -nl 4 --inname=Roatan_benthic_r3_gray.png --outname=outt.png --radius=100
