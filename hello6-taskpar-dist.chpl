@@ -2,24 +2,22 @@
 
 /*
    usage on puma/ocelote:
-     chpl hello.chpl
-     ./hello
+     chpl hello6-taskpar-dist.chpl
+     ./hello6-taskpar-dist -nl 2
 
-FIXME: 1/25/23, the below doesn't work with podman, but does work with docker
-*** FATAL ERROR (85f9bf800e92:5): in gasneti_calibrate_tsc() at opt/chapel/third-party/gasnet/gasnet-src/gasnet_tools.c:4201: Reference timer resolution of 6500 ns on 85f9bf800e92 is not acceptable for calibration of the TSC.
-Please reconfigure with --enable-force-gettimeofday or --enable-force-posix-realtime.
-*** WARNING (85f9bf800e92:5): Ignoring call to gasneti_print_backtrace_ifenabled before gasneti_backtrace_init
+     # something else to try
+     ./hello6-taskpar-dist -nl 4 --tasksPerLocale=3
 
-   usage on laptop with podman (or docker):
-     podman pull docker.io/chapel/chapel-gasnet // only have to do this once, but it takes a few minutes
+   usage on laptop with docker:
+     docker pull docker.io/chapel/chapel-gasnet // only do this once, but it takes a few minutes
 
-     podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel-gasnet chpl hello6-taskpar-dist.chpl
-     podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel-gasnet ./hello6-taskpar-dist -nl 4
+     docker run --rm -v "$PWD":/myapp -w /myapp chapel/chapel-gasnet chpl hello6-taskpar-dist.chpl
+     docker run --rm -v "$PWD":/myapp -w /myapp chapel/chapel-gasnet ./hello6-taskpar-dist -nl 4
 
-     // something else to try
-     podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel-gasnet ./hello6-taskpar-dist -nl 4 --tasksPerLocale=3
+     # something else to try
+     docker run --rm -v "$PWD":/myapp -w /myapp chapel/chapel-gasnet ./hello6-taskpar-dist -nl 4 --tasksPerLocale=3
 
-   See https://chapel-lang.org/docs/examples/index.html
+   See https://chapel-lang.org/docs/examples/index.html for more hello world variants.
 
    1/25/23, downloaded from 
    https://github.com/chapel-lang/chapel/blob/main/test/release/examples/hello6-taskpar-dist.chpl
@@ -53,7 +51,7 @@ config const tasksPerLocale = 1;
 //
 // Use a `coforall-loop` to create a distinct task per locale on which
 // the program is executing.  Here, we're iterating over the built-in
-// `Locales` array which stores an array of locale values
+// `Locales` array that stores an array of locale values
 // corresponding 1:1 with the system's compute nodes on which the
 // program is executing.  Thus, each iteration corresponds to one of
 // the locales, represented by the loop index variable `loc`.

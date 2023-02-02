@@ -21,7 +21,8 @@ for information about where the tutorial is being held.
   * Then, the below commands work with podman or docker
 ```
  podman pull docker.io/chapel/chapel     // takes about 3 minutes
- echo 'writeln("Hello, world!");' > hello.chpl
+ git clone git@github.com:mstrout/ChapelForPythonProgrammersFeb2023.git
+ cd ChapelForPythonProgrammersFeb2023
  podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel chpl hello.chpl
  podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel ./hello
 ```
@@ -32,9 +33,13 @@ ssh yourNetid@hpc.arizona.edu
 [yourNetid@gatekeeper ~]$ shell
 (puma) [yourNetid@wentletrap ~]$ interactive –a yourHPCAccount –t 01:00:00 –n 2
 (puma) [yourNetid@r6u03n1 ~]$ module load chapel-udp
+ git clone git@github.com:mstrout/ChapelForPythonProgrammersFeb2023.git
+ cd ChapelForPythonProgrammersFeb2023
+ chpl hello.chpl
+ ./hello
 ```
 
-## Code Examples
+## Code Examples in this repository
 
 For these code examples to compile and run as described in the "usage" message at the
 top of each source file, make sure you have installed, initialized, and started

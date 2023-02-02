@@ -46,3 +46,5 @@ writeln("myStringConst = [", myStringConst, "]");
 //myStringConst = "something else results in an error, so I commented it out";
 writeln();
 
+// maps
+
