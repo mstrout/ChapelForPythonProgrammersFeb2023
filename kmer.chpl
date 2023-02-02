@@ -8,6 +8,9 @@
      podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel chpl kmer.chpl
      podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel ./kmer
 
+     # can change the infilename on command line because it is a configuration const
+     podman run --rm -v "$PWD":/myapp -w /myapp chapel/chapel ./kmer --infilename="kmer.chpl"
+
    For docker usage, see https://chapel-lang.org/install-docker.html
 
    Original version of kmer counting algorithm provided by
@@ -17,32 +20,33 @@
    https://www.ncbi.nlm.nih.gov/nuccore/NC_001422.1?report=fasta
  */
 
-use Map;
-use IO;
+use Map, IO;
 
 // to have it read a different input file, run as follows:
-//      ./kmer --infile="anotherFileName"
-config const infile = "kmer_large_input.txt";
+//      ./kmer --infilename="anotherFileName"
+config const infilename = "kmer_large_input.txt";
 
 // set k to something different on the commandline with
 //      ./kmer --k=7
 config const k = 4;
 
-// read in the input sequence from the file infile
-var sequence : string;
-var f = open(infile, iomode.r);
-var fReader =  f.reader();
-fReader.read(sequence);
+// read in the input sequence from the file infile and strip out newlines
+var sequence, line : string;
+var f = open(infilename, iomode.r);
+var infile =  f.reader();
+while infile.readLine(line) {
+  sequence += line.strip();
+}
 
 // declare a dictionary/map to store the count per kmer
 var nkmerCounts : map(string, int);
 
 // count up the number of times each kmer occurs
 for ind in 0..<(sequence.size-k) {
-  nkmerCounts[sequence[ind..<ind+k]] += 1;
+  nkmerCounts[sequence[ind..#k]] += 1;
 }
 
-writeln("Number of unique k-mers in ", infile, " is ", nkmerCounts.size);
+writeln("Number of unique k-mers in ", infilename, " is ", nkmerCounts.size);
 writeln();
 writeln("nkmerCounts = ");
 writeln(nkmerCounts);
