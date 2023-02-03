@@ -21,10 +21,11 @@
    for all datatypes, those provided by the language and those that are user-defined.
    This makes debugging by printing out values of those types much easier.
 
-   In this example program, we see how `writeln` uses the default `writeThis` method without
-   us having to explicitly call it.
-
+   In this example program, we see how `writeln` uses the default, compiler-generated
+   `writeThis` method without us having to explicitly call it.
 */
+
+writeln();
 
 // integers and floats
 var myInt : int;
@@ -47,4 +48,31 @@ writeln("myStringConst = [", myStringConst, "]");
 writeln();
 
 // maps
+use Map;
+
+var myMap : map(int, string);
+myMap.add(1,"one");
+myMap.add(2,"two");
+writeln("myMap = ", myMap);
+writeln();
+
+
+// user-defined records
+record point {
+  var x : int;
+  var y : int;
+}
+var myPoint : point = new point(2,3);
+writeln("myPoint = ", myPoint);
+writeln();
+
+
+// lists
+use List;
+
+var myList : list(point);
+myList.append(new point(1,2));
+myList.append(new point(3,4));
+myList.append(new point(4,5));
+writeln("myList = ", myList);
 
