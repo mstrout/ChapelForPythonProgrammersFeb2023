@@ -10,7 +10,7 @@ for information about where the tutorial is being held.
 
 ## Participating in the tutorial
 
-* Poll Everywhere link: pollev.com/michellestrout402
+* Poll Everywhere link: https://pollev.com/michellestrout402
 
 * Attempt this Online website for running Chapel code
   * Go to main Chapel webpage at https://chapel-lang.org/
