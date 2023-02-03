@@ -66,7 +66,7 @@ $ export GASNET_SSH_SERVERS=`scontrol show hostnames | xargs echo`
 Compile your program:
 ```
 $ cd ChapelForPythonProgrammersFeb2023
-$ chpl hello6-taskpar.chpl
+$ chpl hello6-taskpar-dist.chpl
 ```
 
 Run it:
@@ -146,4 +146,3 @@ The current docker container doesn't work with podman just yet.  Here are the in
     echo 'writeln("Hello, world!");' > hello.chpl
     docker run --rm -v "$PWD":/myapp -w /myapp chapel/chapel-gasnet chpl hello.chpl
     docker run --rm -v "$PWD":/myapp -w /myapp chapel/chapel-gasnet ./hello -nl 2
-
