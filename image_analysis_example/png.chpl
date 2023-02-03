@@ -14,6 +14,7 @@
             --y=<#>            y coordinate of pixel to print
 
         c 2015-2018 Primordial Machine Vision Systems
+        Copied initially from http://primachvis.com/html/imgproc_chapel.html
 *****/
 
 module png {

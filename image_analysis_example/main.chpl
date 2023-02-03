@@ -8,10 +8,11 @@ use LinearAlgebra;
 /* Command line arguments. */
 config const inname : string;                /* name of PNG file to read */
 config const outname : string;               /* name of PNG file to write at the end */
-config const radius : int;                  /* the radius of the convolution window (in pixels) */
+config const radius : int;                   /* the radius of the convolution window (in pixels) */
 
 
-proc convolve_and_calculate(Image: [] int(64), centerPoints : ?, Mask : [] bool, MaskDomain : ?, Output: [] real, t: stopwatch) : [] {
+proc convolve_and_calculate(Image: [] int(64), centerPoints : ?, 
+                            Mask : [] bool, MaskDomain : ?, Output: [] real, t: stopwatch) : [] {
 
   forall center in centerPoints {
     var scalar : int = 0;
@@ -43,7 +44,7 @@ proc main(args: [] string) {
   var Mask = create_distance_mask(radius);
 
   // Create Block distribution of interior of PNG
-  const offset = radius;  // This is needed so we don't try to convolve the window off the edge of the image
+  const offset = radius;  // Needed so we don't try to convolve the window off the edge of the image
   const Inner = ImageSpace.expand(-offset);
   const myTargetLocales = reshape(Locales, {1..Locales.size, 1..1});
   const D = Inner dmapped Block(Inner, targetLocales=myTargetLocales);
@@ -54,11 +55,6 @@ proc main(args: [] string) {
   writeln("Starting coforall loop.");
 
   coforall loc in Locales do on loc {
-
-    // If I put "create_distance_mask" inside this loop I need to declare local copies of these variables,
-    // otherwise it seems like Chapel will have to do a ton
-    // of cross-locale calls to access these variables. This seems to double the amount of time it
-    // takes to run through the coforall loop for all non-head locales!
 
     const locImageDomain = Image.domain;
     const locImage : [locImageDomain] Image.eltType = Image;

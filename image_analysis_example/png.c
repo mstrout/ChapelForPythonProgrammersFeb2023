@@ -244,7 +244,7 @@ int PNG_read(const char *fname, _rgbimage **img) {
 ***/
 int PNG_write(const char *fname, _rgbimage *img, enum clrplane plane) {
   FILE *fout;                           /* file handle to write to */
-  png_structp ptr;                      /* internal reference to PNG data */
+  png_structp ptr=NULL;                 /* internal reference to PNG data */
   png_infop info;                       /* picture information */
   png_byte *row;                        /* copy of image row to write */
   char *errmsg;                         /* error message */

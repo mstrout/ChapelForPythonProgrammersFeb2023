@@ -1,2 +1,0 @@
-PASS: pngvalid --strict --standard --progressive-read --interlace (floating point arithmetic)
-PASS tests/pngvalid-progressive-interlace-standard (exit status: 0)

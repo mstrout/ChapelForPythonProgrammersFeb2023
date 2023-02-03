@@ -1,2 +1,0 @@
-PASS: pngvalid --strict --transform (floating point arithmetic)
-PASS tests/pngvalid-transform (exit status: 0)
