@@ -28,15 +28,53 @@ for information about where the tutorial is being held.
 ```
 
 * Chapel on Puma and Ocelote
+Get to a login node
 ```
-ssh yourNetid@hpc.arizona.edu
+$ ssh yourNetid@hpc.arizona.edu
 [yourNetid@gatekeeper ~]$ shell
-(puma) [yourNetid@wentletrap ~]$ interactive –a yourHPCAccount –t 01:00:00 –n 2
-(puma) [yourNetid@r6u03n1 ~]$ module load chapel-udp
- git clone git@github.com:mstrout/ChapelForPythonProgrammersFeb2023.git
- cd ChapelForPythonProgrammersFeb2023
- chpl hello.chpl
- ./hello
+```
+
+Set up your ssh key and clone the tutorial repository. These things only need to be done once, and they can be done on the login node.
+
+```
+$ ssh-keygen     # hit return to all the questions
+$ cp ~/.ssh/id_rsa.pub  ~/.ssh/authorized_keys
+
+$ git clone https://github.com/mstrout/ChapelForPythommersFeb2023.git
+```
+
+Ask for an allocation of 2 nodes.
+```
+$ salloc --exclusive -N 2 --account=youraccount --partition=standard --time=01:00:00
+```
+
+
+Once you have the allocation...
+
+Load Chapel:
+
+```
+$ module load chapel-udp
+```
+
+Set up gasnet:
+
+```
+$ export GASNET_SPAWNFN=S
+$ export GASNET_SSH_SERVERS=`scontrol show hostnames | xargs echo`
+```
+Compile your program:
+```
+$ cd ChapelForPythonProgrammersFeb2023
+$ chpl hello6-taskpar.chpl
+```
+
+Run it:
+```
+$ ./hello6-taskpar -nl 2
+   # 2 is the number of locales to create. It cannot exceed the -N option to salloc above.
+
+$ ./hello6-taskpar -nl 2 --tasksPerLocale=7
 ```
 
 ## Code Examples in this repository
