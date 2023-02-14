@@ -11,7 +11,6 @@ var A : [0..<N,0..<N] bool;
 // 2 and 3 have to wait for
 A[2,0] = true;
 A[2,1] = true;
-A[2,3] = true;
 A[3,1] = true;
 
 // can I declare an array of atomics? yes
@@ -34,7 +33,7 @@ for i in 0..<N {
     // do task i work
     writeln("Task: ", i, " is working away");
 
-    for j in 0..<N { // should only be later tasks
+    for j in i+1..<N { // should only be later tasks
       if A[j,i] { numToWaitFor[j].fetchAdd(-1); }
     }
   }
