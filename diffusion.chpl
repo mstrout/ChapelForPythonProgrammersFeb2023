@@ -41,8 +41,6 @@ const dx : real = xLen / (nx - 1),
       dy : real = yLen / (ny - 1),
       dt : real = sigma * dx * dy / nu;
 
-config param createPlots = true;
-
 // define 2D domain and subdomain
 const dom = {0..<nx, 0..<ny};
 const domInner : subdomain(dom) = dom.expand(-1);
