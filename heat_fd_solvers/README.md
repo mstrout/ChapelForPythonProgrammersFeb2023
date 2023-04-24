@@ -1,8 +1,8 @@
 # Chapel Heat/Diffusion equation example
 
-The examples in this directory (based on this [tutorial](https://nbviewer.org/github/barbagroup/CFDPython/blob/master/lessons/09_Step_7.ipynb)), show how one might write a simple 2D finite difference solver for the heat equation in Chapel.
+The examples in this directory, show how one might write a simple 2D finite difference solver for the heat equation in Chapel.
 
-The serial version is akin to the Python tutorial this code is based on (though with the performance of a compiled language), and the distributed version is extended to allow the simulation to run across multiple compute nodes using distributed arrays.
+The single-node version is based on this [Python tutorial](https://nbviewer.org/github/barbagroup/CFDPython/blob/master/lessons/09_Step_7.ipynb). The distributed version is an extension of the single-node code that allows the same simulation to run across multiple compute nodes using distributed arrays and Chapel's high-level parallel constructs.
 
 ## Compiling and Running on a single node
 
@@ -17,7 +17,7 @@ chpl heat_2d.chpl --fast
 ```bash
 ./heat_2d
 ```
-If all goes well, you should see an output like the following:
+If all goes well, you should see an output like the following. The mean and standard-deviation of the solution grid are printed out as well as the elapsed time spent in the kernel.
 ```
 mean: 1.07588 stdDev: 0.102424
 elapsed time: 0.011921 seconds
@@ -28,7 +28,7 @@ elapsed time: 0.011921 seconds
 ./heat_2d --nt=100
 ```
 
-## Compiling and Running on a multiple nodes
+## Compiling and Running on multiple nodes
 
 1. Follow the instructions [here](https://chapel-lang.org/docs/usingchapel/multilocale.html) to configure your Chapel installation for multi-locale execution
 
@@ -42,8 +42,7 @@ chpl heat_2d_dist.chpl --fast
 ./heat_2d_dist -nl 2
 ```
 
-4. As with the single-node version. Command line arguments can be used to manipulate a variety of simulation parameters.
-
+4. As with the single-node version, command line arguments can be used to manipulate a variety of simulation parameters.
 
 ## All command line parameters:
 
