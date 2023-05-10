@@ -1,6 +1,6 @@
 # Chapel Heat/Diffusion equation example
 
-The examples in this directory, show how one might write a simple 2D finite difference solver for the heat equation in Chapel.
+The examples in this directory show how one might write a simple 2D finite difference solver for the heat equation in Chapel.
 
 The single-node version is based on this [Python tutorial](https://nbviewer.org/github/barbagroup/CFDPython/blob/master/lessons/09_Step_7.ipynb). The distributed version is an extension of the single-node code that allows the same simulation to run across multiple compute nodes using distributed arrays and Chapel's high-level parallel constructs.
 
