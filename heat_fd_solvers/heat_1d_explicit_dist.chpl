@@ -1,4 +1,6 @@
 import Time.stopwatch;
+import BlockDist.Block;
+use CommDiagnostics;
 
 // ---- set up simulation parameters ------
 // declare configurable parameters with default values
@@ -9,30 +11,29 @@ config const xLen = 2.0,    // length of the grid in x
              nu = 0.05;     // viscosity
 
 // declare non-configurable parameters
-const dx : real = xLen / (nx - 1),       // grid spacing in x
-      dt : real = sigma * dx / nu,       // time step size
-      nTasks = here.maxTaskPar,          // number of tasks
-      npt = nx / nTasks;                 // number of grid points per task
+const dx : real = xLen / (nx - 1),          // grid spacing in x
+      dt : real = sigma * dx / nu,          // time step size
+      nTasksPerLoc = here.maxTaskPar,       // number of tasks
+      nTasks = Locales.size * nTasksPerLoc, // total number of tasks
+      npt = nx / nTasks;                    // number of grid points per task
 
 param LEFT = 0, RIGHT = 1;
 
 var t = new stopwatch();
 
 // ---- set up the grid ------
-// define a domain to describe the grid
-const indices = {0..<nx};
+// define a domain and distribution to describe the grid
+const indices = {0..<nx},
+      Indices: domain(1) dmapped Block(indices) = indices;
 
-// define a 2D array over the above domain
-var u : [indices] real;
-
-// ---- set up ghost cells ------
-var ghosts : [0..1, 0..<nTasks] sync real;
+// define a distributed 2D array over the above domain
+var u : [Indices] real;
 
 // set up initial conditions
 u = 1.0;
 u[(0.5 / dx):int..<(1.0 / dx + 1):int] = 2;
 
-proc work(tid: int) {
+proc work(tid: int, ref ghosts: [] sync real) {
   // define region of the global array owned by this task
   const lo = tid * npt,
         hi = min((tid + 1) * npt, nx);
@@ -69,13 +70,19 @@ proc work(tid: int) {
   u[taskIndices] = uLocal1;
 }
 
-// start timing
+// start timing and comm diagnostics
 t.start();
+startVerboseComm();
 
 // run the simulation across tasks
-coforall tid in 0..<nTasks do work(tid);
+coforall (loc, lid) in zip(Locales, 0..) do on loc {
+  var ghosts : [0..1, 0..<nTasksPerLoc] sync real;
 
-// stop timing
+  coforall tid in 0..<nTasksPerLoc do work(tid + lid * nTasksPerLoc, ghosts);
+}
+
+// stop timing and comm diagnostics
+stopVerboseComm();
 t.stop();
 
 // ---- print final results ------
